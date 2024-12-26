@@ -1,0 +1,664 @@
+{
+	"id": "0ebdf075-7629-49a0-835c-30e952590ae0",
+	"name": "Gerenciar Usuários - Testes API",
+	"timestamp": "2024-12-23T19:14:07.663Z",
+	"collection_id": "10848556-5dfa4544-132d-4ac7-aeff-69fbee8933e9",
+	"folder_id": 0,
+	"environment_id": "10848556-6a08f7ed-8334-422b-8ebb-a805387f6bed",
+	"totalPass": 32,
+	"delay": 0,
+	"persist": true,
+	"status": "finished",
+	"startedAt": "2024-12-23T19:14:02.186Z",
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "f39121a9-78a0-4d21-8ff6-d480a6988827",
+			"name": "POST /login - Válido",
+			"url": "https://serverest.dev/login",
+			"time": 836,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"HTTP 200 OK": true
+			},
+			"testPassFailCounts": {
+				"HTTP 200 OK": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				836
+			],
+			"allTests": [
+				{
+					"HTTP 200 OK": true
+				}
+			]
+		},
+		{
+			"id": "816b16ad-ab09-4963-a9da-91e2ba5a2f06",
+			"name": "POST /login - Inválido",
+			"url": "https://serverest.dev/login",
+			"time": 205,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"HTTP 401 Unauthorized": true,
+				"Email e/ou senha inválidos": true
+			},
+			"testPassFailCounts": {
+				"HTTP 401 Unauthorized": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Email e/ou senha inválidos": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				205
+			],
+			"allTests": [
+				{
+					"HTTP 401 Unauthorized": true,
+					"Email e/ou senha inválidos": true
+				}
+			]
+		},
+		{
+			"id": "c045f530-3024-49fa-8f1e-cad61c2f3e66",
+			"name": "GET /usuarios - Token Válido",
+			"url": "https://serverest.dev/usuarios",
+			"time": 659,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"HTTP 200 OK": true,
+				"Resposta contém array de usuários": true
+			},
+			"testPassFailCounts": {
+				"HTTP 200 OK": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Resposta contém array de usuários": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				659
+			],
+			"allTests": [
+				{
+					"HTTP 200 OK": true,
+					"Resposta contém array de usuários": true
+				}
+			]
+		},
+		{
+			"id": "9fb5bc25-fd36-494f-bd15-bac5ace72f88",
+			"name": "GET /usuarios - Token Inválido",
+			"url": "https://serverest.dev/usuarios",
+			"time": 291,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"HTTP 200 OK ou HTTP 401 Unauthorized": true
+			},
+			"testPassFailCounts": {
+				"HTTP 200 OK ou HTTP 401 Unauthorized": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				291
+			],
+			"allTests": [
+				{
+					"HTTP 200 OK ou HTTP 401 Unauthorized": true
+				}
+			]
+		},
+		{
+			"id": "92549e38-4996-4907-bc63-d826252b70b4",
+			"name": "GET /usuarios - Sem Autenticação",
+			"url": "https://serverest.dev/usuarios",
+			"time": 312,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"HTTP 200 OK ou HTTP 401 Unauthorized": true
+			},
+			"testPassFailCounts": {
+				"HTTP 200 OK ou HTTP 401 Unauthorized": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				312
+			],
+			"allTests": [
+				{
+					"HTTP 200 OK ou HTTP 401 Unauthorized": true
+				}
+			]
+		},
+		{
+			"id": "fed2da30-3c17-418d-9bb3-dee17fc6541c",
+			"name": "GET /usuarios/{id} -  Consultar Usuário Existente",
+			"url": "https://serverest.dev/usuarios/XukbXO2UanPmBA4o",
+			"time": 248,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"HTTP 200 OK": true,
+				"Usuário encontrado": true
+			},
+			"testPassFailCounts": {
+				"HTTP 200 OK": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Usuário encontrado": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				248
+			],
+			"allTests": [
+				{
+					"HTTP 200 OK": true,
+					"Usuário encontrado": true
+				}
+			]
+		},
+		{
+			"id": "0db44712-6ec8-4fcb-9e2f-1a023a5366aa",
+			"name": "GET /usuarios/{id} -  Consultar Usuário Inválido",
+			"url": "https://serverest.dev/usuarios/ewrw",
+			"time": 191,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"HTTP 400 Bad Request": true,
+				"Usuário não encontrado": true
+			},
+			"testPassFailCounts": {
+				"HTTP 400 Bad Request": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Usuário não encontrado": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				191
+			],
+			"allTests": [
+				{
+					"HTTP 400 Bad Request": true,
+					"Usuário não encontrado": true
+				}
+			]
+		},
+		{
+			"id": "00f26898-c3e2-43b9-8543-a6302bb0b70d",
+			"name": "POST /usuarios - Criar Usuário Válido - Admin True",
+			"url": "https://serverest.dev/usuarios",
+			"time": 165,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"HTTP 201 - Created": true,
+				"Cadastro realizado com sucesso": true
+			},
+			"testPassFailCounts": {
+				"HTTP 201 - Created": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Cadastro realizado com sucesso": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				165
+			],
+			"allTests": [
+				{
+					"HTTP 201 - Created": true,
+					"Cadastro realizado com sucesso": true
+				}
+			]
+		},
+		{
+			"id": "2be29a63-a990-4570-9f77-aa054e42713c",
+			"name": "POST /usuarios - Criar Usuário Válido - Admin False",
+			"url": "https://serverest.dev/usuarios",
+			"time": 153,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"HTTP 201 - Created": true,
+				"Cadastro realizado com sucesso": true
+			},
+			"testPassFailCounts": {
+				"HTTP 201 - Created": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Cadastro realizado com sucesso": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				153
+			],
+			"allTests": [
+				{
+					"HTTP 201 - Created": true,
+					"Cadastro realizado com sucesso": true
+				}
+			]
+		},
+		{
+			"id": "fffb1e8a-b089-486b-ae1e-3689d7ecf55c",
+			"name": "POST /usuarios - Criar Usuário Inválido",
+			"url": "https://serverest.dev/usuarios",
+			"time": 148,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"HTTP 400 - Bad Request": true,
+				"email deve ser um email válido": true
+			},
+			"testPassFailCounts": {
+				"HTTP 400 - Bad Request": {
+					"pass": 1,
+					"fail": 0
+				},
+				"email deve ser um email válido": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				148
+			],
+			"allTests": [
+				{
+					"HTTP 400 - Bad Request": true,
+					"email deve ser um email válido": true
+				}
+			]
+		},
+		{
+			"id": "fc507c15-492f-453a-a703-eab3d5ba69cb",
+			"name": "POST /usuarios - Criar Usuário Email Duplicado",
+			"url": "https://serverest.dev/usuarios",
+			"time": 166,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"HTTP 400 - Bad Request": true,
+				"Este email já está sendo usado": true
+			},
+			"testPassFailCounts": {
+				"HTTP 400 - Bad Request": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Este email já está sendo usado": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				166
+			],
+			"allTests": [
+				{
+					"HTTP 400 - Bad Request": true,
+					"Este email já está sendo usado": true
+				}
+			]
+		},
+		{
+			"id": "c2ef6d3c-d996-4a0b-a127-5e48c3e98688",
+			"name": "POST /usuarios - Criar Usuário Sem campos obrigatórios",
+			"url": "https://serverest.dev/usuarios",
+			"time": 150,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"HTTP 400 - Bad Request": true,
+				"Os campos obrigatórios devem ser preenchidos": true
+			},
+			"testPassFailCounts": {
+				"HTTP 400 - Bad Request": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Os campos obrigatórios devem ser preenchidos": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				150
+			],
+			"allTests": [
+				{
+					"HTTP 400 - Bad Request": true,
+					"Os campos obrigatórios devem ser preenchidos": true
+				}
+			]
+		},
+		{
+			"id": "bcda70e3-db2c-4930-b7fc-ce5f86e477ab",
+			"name": "PUT /usuarios - Atualizar Usuário Válido",
+			"url": "https://serverest.dev/usuarios/XukbXO2UanPmBA4o",
+			"time": 160,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"HTTP 200 OK": true,
+				"Registro alterado com sucesso": true
+			},
+			"testPassFailCounts": {
+				"HTTP 200 OK": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Registro alterado com sucesso": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				160
+			],
+			"allTests": [
+				{
+					"HTTP 200 OK": true,
+					"Registro alterado com sucesso": true
+				}
+			]
+		},
+		{
+			"id": "56a2081b-6e7b-48be-9582-adeb1a77ae77",
+			"name": "PUT /usuarios - Atualizar Usuário Email duplicado",
+			"url": "https://serverest.dev/usuarios/user_t88iw1gikuc@test.com",
+			"time": 152,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"HTTP 400 - Bad Request": true,
+				"Este email já está sendo usado": true
+			},
+			"testPassFailCounts": {
+				"HTTP 400 - Bad Request": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Este email já está sendo usado": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				152
+			],
+			"allTests": [
+				{
+					"HTTP 400 - Bad Request": true,
+					"Este email já está sendo usado": true
+				}
+			]
+		},
+		{
+			"id": "7f53fee0-61e9-4d0e-a32b-2d5be4be4912",
+			"name": "PUT /usuarios - Atualizar Usuário Inexistente",
+			"url": "https://serverest.dev/usuarios/ewrw",
+			"time": 168,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"HTTP 201 - Created ou HTTP 400 - Bad Request": true,
+				"Cadastro realizado com sucesso": true
+			},
+			"testPassFailCounts": {
+				"HTTP 201 - Created ou HTTP 400 - Bad Request": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Cadastro realizado com sucesso": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				168
+			],
+			"allTests": [
+				{
+					"HTTP 201 - Created ou HTTP 400 - Bad Request": true,
+					"Cadastro realizado com sucesso": true
+				}
+			]
+		},
+		{
+			"id": "e8f191c8-62e6-4312-99d9-cdb9d01a8c05",
+			"name": "DELETE /usuarios - Deletar Usuário Existente",
+			"url": "https://serverest.dev/usuarios/sxSeSUcxRdpeRNu9",
+			"time": 151,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"HTTP 200 OK": true,
+				"Registro excluído com sucesso": true
+			},
+			"testPassFailCounts": {
+				"HTTP 200 OK": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Registro excluído com sucesso": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				151
+			],
+			"allTests": [
+				{
+					"HTTP 200 OK": true,
+					"Registro excluído com sucesso": true
+				}
+			]
+		},
+		{
+			"id": "900c94c5-c540-4ca1-aabd-97be850d2b25",
+			"name": "DELETE /usuarios - Deletar Usuário Inexistente",
+			"url": "https://serverest.dev/usuarios/QLTQfqTSDj3idjVA",
+			"time": 260,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"HTTP 200 OK": true,
+				"Nenhum registro excluído": true
+			},
+			"testPassFailCounts": {
+				"HTTP 200 OK": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Nenhum registro excluído": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				260
+			],
+			"allTests": [
+				{
+					"HTTP 200 OK": true,
+					"Nenhum registro excluído": true
+				}
+			]
+		},
+		{
+			"id": "fc33e17f-306b-4a58-8e51-c0ed03cfbbf7",
+			"name": "100 Requisições por minuto",
+			"url": "https://serverest.dev/usuarios/XukbXO2UanPmBA4o",
+			"time": 149,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"HTTP 200 - Requisição bem-sucedida dentro do limite de 100 requisições": true
+			},
+			"testPassFailCounts": {
+				"HTTP 200 - Requisição bem-sucedida dentro do limite de 100 requisições": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				149
+			],
+			"allTests": [
+				{
+					"HTTP 200 - Requisição bem-sucedida dentro do limite de 100 requisições": true
+				}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 4564,
+	"collection": {
+		"requests": [
+			{
+				"id": "f39121a9-78a0-4d21-8ff6-d480a6988827",
+				"method": "POST"
+			},
+			{
+				"id": "816b16ad-ab09-4963-a9da-91e2ba5a2f06",
+				"method": "POST"
+			},
+			{
+				"id": "c045f530-3024-49fa-8f1e-cad61c2f3e66",
+				"method": "GET"
+			},
+			{
+				"id": "9fb5bc25-fd36-494f-bd15-bac5ace72f88",
+				"method": "GET"
+			},
+			{
+				"id": "92549e38-4996-4907-bc63-d826252b70b4",
+				"method": "GET"
+			},
+			{
+				"id": "fed2da30-3c17-418d-9bb3-dee17fc6541c",
+				"method": "GET"
+			},
+			{
+				"id": "0db44712-6ec8-4fcb-9e2f-1a023a5366aa",
+				"method": "GET"
+			},
+			{
+				"id": "00f26898-c3e2-43b9-8543-a6302bb0b70d",
+				"method": "POST"
+			},
+			{
+				"id": "2be29a63-a990-4570-9f77-aa054e42713c",
+				"method": "POST"
+			},
+			{
+				"id": "fffb1e8a-b089-486b-ae1e-3689d7ecf55c",
+				"method": "POST"
+			},
+			{
+				"id": "fc507c15-492f-453a-a703-eab3d5ba69cb",
+				"method": "POST"
+			},
+			{
+				"id": "c2ef6d3c-d996-4a0b-a127-5e48c3e98688",
+				"method": "POST"
+			},
+			{
+				"id": "bcda70e3-db2c-4930-b7fc-ce5f86e477ab",
+				"method": "PUT"
+			},
+			{
+				"id": "56a2081b-6e7b-48be-9582-adeb1a77ae77",
+				"method": "PUT"
+			},
+			{
+				"id": "7f53fee0-61e9-4d0e-a32b-2d5be4be4912",
+				"method": "PUT"
+			},
+			{
+				"id": "e8f191c8-62e6-4312-99d9-cdb9d01a8c05",
+				"method": "DELETE"
+			},
+			{
+				"id": "900c94c5-c540-4ca1-aabd-97be850d2b25",
+				"method": "DELETE"
+			},
+			{
+				"id": "fc33e17f-306b-4a58-8e51-c0ed03cfbbf7",
+				"method": "GET"
+			}
+		]
+	}
+}
