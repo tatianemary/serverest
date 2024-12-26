@@ -1,0 +1,17 @@
+stages:
+  - automated-api-tests
+
+automated-api-tests:
+  stage: automated-api-tests
+  image: cimg/base:2021.04
+  before_script:
+    # Installing Postman CLI
+    - curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
+  script:
+    # Login using your Postman API keys
+    - postman login --with-api-key $POSTMAN_API_KEY
+    - postman collection run "10848556-5dfa4544-132d-4ac7-aeff-69fbee8933e9" -e "10848556-6a08f7ed-8334-422b-8ebb-a805387f6bed"
+  artifacts:
+    paths:
+      - report.json
+    when: always

@@ -1,0 +1,93 @@
+{
+	"id": "6a08f7ed-8334-422b-8ebb-a805387f6bed",
+	"name": "API Test Environment",
+	"values": [
+		{
+			"key": "jwtToken",
+			"value": "{{jwt_token}}",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "baseUrl",
+			"value": "https://serverest.dev",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "invalidToken",
+			"value": "Bearer abc12387625jhgkjhglksjfdgsjskdf",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "userId",
+			"value": "0WGfulPBCyEoYsE3",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "userId2",
+			"value": "6NVXMBbd4anNMfoj",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "invalidUser",
+			"value": "ewrwp",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "invalidUser2",
+			"value": "OA51YLpNNc2jIos4",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "emailDuplicated",
+			"value": "user_t88iw1gikuc@test.com",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "userId3",
+			"value": "AxrOqw1k2niWTmrK",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "userId4",
+			"value": "QLTQfqTSDj3idjVA",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "invalidId",
+			"value": "invalidID",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "email",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "username",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "jwt_token",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2024-12-26T15:13:00.682Z",
+	"_postman_exported_using": "Postman/11.23.3"
+}

@@ -1,0 +1,1130 @@
+{
+	"info": {
+		"_postman_id": "5dfa4544-132d-4ac7-aeff-69fbee8933e9",
+		"name": "Gerenciar Usuários - Testes API",
+		"description": "**Esta documentação descreve os testes automatizados para a API de gerenciamento de usuários, cobrindo a criação, listagem, atualização e exclusão de usuários. A coleção de testes pode ser executada manualmente, via GitLab ou com o uso de Monitores no Postman.**\n\n**Requisitos**\n\n**1\\. Postman instalado.**\n\n**2\\. Ambiente de Teste configurado no Postman.**\n\n**3\\. Autenticação: O token de autenticação deve ser incluído em cada requisição para acessar os endpoints protegidos.**\n\n---\n\n**Passos para Executar os Testes no Postman**\n\n**1\\. Configuração do Ambiente**\n\n- **No canto superior direito do Postman, selecione o ambiente \"Ambiente de Teste\".**\n    \n- **As variáveis de ambiente incluem:**\n    \n    - **baseUrl: A URL base da API.**\n        \n    - **token: O token de autenticação necessário para rodar os testes.**\n        \n    - **userId: O ID do usuário a ser criado ou manipulado.**\n        \n\n**2\\. Rodar os Testes Manualmente**\n\n- **Selecione a coleção de testes no painel Collections do Postman.**\n    \n- **Clique em Run no canto superior direito da interface.**\n    \n- **Aparecerá a opção \"Run manually\". Selecione esta opção.**\n    \n- **Agora, selecione a coleção chamada \"Gerenciar Usuários - Testes API\" para iniciar os testes.**\n    \n- **Clique em Start Test para iniciar a execução dos testes.**\n    \n\n**3\\. Usando o Monitor no Postman**\n\n**O Monitor no Postman permite que você agende a execução de suas coleções automaticamente em intervalos regulares. Isso é útil se você deseja rodar os testes sem a necessidade de intervenção manual.**\n\n**4\\. Como Rodar os Testes no Postman**\n\n**1\\. Rodar os Testes:**\n\no **Com a coleção e o ambiente configurados, basta clicar em Run e seguir as instruções para rodar os testes.**\n\no **Usando o Monitor: Caso queira rodar os testes automaticamente, crie um monitor e defina a frequência de execução.**",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10848556",
+		"_collection_link": "https://lunar-meadow-532066.postman.co/workspace/Desafio-QA---serverest~3fe3839d-e563-455e-b581-fcdb7a538217/collection/10848556-5dfa4544-132d-4ac7-aeff-69fbee8933e9?action=share&source=collection_link&creator=10848556"
+	},
+	"item": [
+		{
+			"name": "POST /login",
+			"item": [
+				{
+					"name": "POST /login - Válido",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Extrai o token e armazena na variável \"jwt_token\"",
+									"let jsonData = pm.response.json();",
+									"pm.environment.set(\"jwt_token\", jsonData.token);",
+									"",
+									"// Valida o status code 200 OK",
+									"pm.test(\"HTTP 200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"fulano@qa.com\",\n  \"password\": \"teste\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST /login - Inválido",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Extrai o token e armazena na variável \"jwt_token\"",
+									"let jsonData = pm.response.json();",
+									"pm.environment.set(\"jwt_token\", jsonData.token);",
+									"",
+									"// Valida o status code 401 Unauthorized",
+									"pm.test(\"HTTP 401 Unauthorized\", function () {",
+									"    const statusCode = pm.response.code;",
+									"    pm.expect([401]).to.include(statusCode);",
+									"});",
+									"",
+									"// Valida mensagem de dados inválidos",
+									"pm.test(\"Email e/ou senha inválidos\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.eql(\"Email e/ou senha inválidos\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{invalidToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"fulano123@qa.com\",\n  \"password\": \"teste\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "GET /usuarios",
+			"item": [
+				{
+					"name": "GET /usuarios - Token Válido",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Valida o status code 200 OK",
+									"pm.test(\"HTTP 200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"// Valida a propriedade \"usuarios\"",
+									"// Valida se retorna array de usuários",
+									"pm.test(\"Resposta contém array de usuários\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property(\"usuarios\");",
+									"    pm.expect(jsonData.usuarios).to.be.an(\"array\");",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/usuarios",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET /usuarios - Token Inválido",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Valida se o status code é 200 OK ou 401 Unauthorized",
+									"// A API está permitindo a requisição sem autenticação e/ou com token inválido",
+									"pm.test(\"HTTP 200 OK ou HTTP 401 Unauthorized\", function () {",
+									"    const statusCode = pm.response.code;",
+									"    pm.expect([200, 401]).to.include(statusCode);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{invalidToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{invalidToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/usuarios",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET /usuarios - Sem Autenticação",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Valida se o status code é 200 OK ou 401 Unauthorized",
+									"// A API está permitindo a requisição sem autenticação e/ou com token inválido",
+									"pm.test(\"HTTP 200 OK ou HTTP 401 Unauthorized\", function () {",
+									"    const statusCode = pm.response.code;",
+									"    pm.expect([200, 401]).to.include(statusCode);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/usuarios",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET /usuarios/{id} -  Consultar Usuário Existente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"pm.test(\"HTTP 200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Usuário encontrado\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property(\"nome\");",
+									"    pm.expect(jsonData).to.have.property(\"email\");",
+									"    pm.expect(jsonData).to.have.property(\"password\");",
+									"    pm.expect(jsonData).to.have.property(\"administrador\");",
+									"    pm.expect(jsonData).to.have.property(\"_id\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"packages": {},
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/usuarios/{{userId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"usuarios",
+								"{{userId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET /usuarios/{id} -  Consultar Usuário Inválido",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Valida o status code 200 OK",
+									"pm.test(\"HTTP 400 Bad Request\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"// Valida mensagem de dados inválidos",
+									"pm.test(\"Usuário não encontrado\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.eql(\"Usuário não encontrado\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/usuarios/{{invalidUser}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"usuarios",
+								"{{invalidUser}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "POST /usuarios",
+			"item": [
+				{
+					"name": "POST /usuarios - Criar Usuário Válido - Admin True",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();",
+									"if (response._id) {",
+									"    pm.environment.set(\"userId3\", response._id);",
+									"    console.log(`User ID armazenado: ${response._id}`);",
+									"} else {",
+									"    console.error(\"Erro: userId não encontrado na resposta.\");",
+									"}",
+									"",
+									"pm.test(\"HTTP 201 - Created\", function () {",
+									"    pm.expect(pm.response.code).to.eql(201);",
+									"});",
+									"",
+									"pm.test(\"Cadastro realizado com sucesso\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property(\"_id\"); ",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "  {\n    \"nome\": \"usuario\",\n    \"email\": \"{{$randomEmail}}\",\n    \"password\": \"senha123\",\n    \"administrador\": \"true\"\n  }\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/usuarios",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST /usuarios - Criar Usuário Válido - Admin False",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();",
+									"if (response._id) {",
+									"    pm.environment.set(\"userId3\", response._id);",
+									"    console.log(`User ID armazenado: ${response._id}`);",
+									"} else {",
+									"    console.error(\"Erro: userId não encontrado na resposta.\");",
+									"}",
+									"",
+									"pm.test(\"HTTP 201 - Created\", function () {",
+									"    pm.expect(pm.response.code).to.eql(201);",
+									"});",
+									"",
+									"pm.test(\"Cadastro realizado com sucesso\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property(\"_id\"); ",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "  {\n    \"nome\": \"Ana Santos\",\n    \"email\": \"{{$randomEmail}}\",\n    \"password\": \"teste\",\n    \"administrador\": \"false\"\n  }\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/usuarios",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST /usuarios - Criar Usuário Inválido",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"HTTP 400 - Bad Request\", function () {",
+									"    pm.expect(pm.response.code).to.eql(400); ",
+									"});",
+									"",
+									"pm.test(\"email deve ser um email válido\", function () {",
+									"    const jsonData = pm.response.json();",
+									"",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"Usuario invalido 2024\",\n  \"email\": \"emailinvalido@\",\n  \"password\": \"456bvn\",\n  \"administrador\": \"true\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/usuarios",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST /usuarios - Criar Usuário Email Duplicado",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"HTTP 400 - Bad Request\", function () {",
+									"    pm.expect(pm.response.code).to.eql(400);",
+									"});",
+									"",
+									"pm.test(\"Este email já está sendo usado\", function () {",
+									"    const jsonData = pm.response.json();",
+									"",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"Email Cadastrado\",\n  \"email\": \"emailcadastrado@teste.com\",\n  \"password\": \"456bvn\",\n  \"administrador\": \"true\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/usuarios",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST /usuarios - Criar Usuário Sem campos obrigatórios",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"HTTP 400 - Bad Request\", function () {",
+									"    pm.expect(pm.response.code).to.eql(400);",
+									"});",
+									"",
+									"pm.test(\"Os campos obrigatórios devem ser preenchidos\", function () {",
+									"    const jsonData = pm.response.json();",
+									"",
+									"    pm.expect(jsonData).to.have.property(\"email\");",
+									"    pm.expect(jsonData.email).to.eql(\"email não pode ficar em branco\");",
+									"",
+									"    pm.expect(jsonData).to.have.property(\"password\");",
+									"    pm.expect(jsonData.password).to.eql(\"password não pode ficar em branco\");",
+									"});",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"packages": {},
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"Teste user ausente\",\n  \"email\": \"\",\n  \"password\": \"\",\n  \"administrador\": \"true\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/usuarios",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PUT /usuarios/{id}",
+			"item": [
+				{
+					"name": "PUT /usuarios - Atualizar Usuário Válido",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"HTTP 200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Registro alterado com sucesso\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.eql(\"Registro alterado com sucesso\");",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwtToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n \"nome\": \"usuario\",\n  \"email\": \"{{$randomEmail}}\",\n  \"password\": \"senha123\",\n  \"administrador\": \"true\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/usuarios/{{userId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"usuarios",
+								"{{userId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT /usuarios - Atualizar Usuário Email duplicado",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"HTTP 400 - Bad Request\", function () {",
+									"    pm.expect(pm.response.code).to.eql(400);",
+									"});",
+									"",
+									"pm.test(\"Este email já está sendo usado\", function () {",
+									"    const jsonData = pm.response.json();",
+									"",
+									"    pm.expect(jsonData.message).to.eql(\"Este email já está sendo usado\");",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwtToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome\": \"usuario\",\n    \"email\": \"user_t88iw1gikuc@test.com\",\n    \"password\": \"senha123\",\n    \"administrador\": \"true\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/usuarios/{{emailDuplicated}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"usuarios",
+								"{{emailDuplicated}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT /usuarios - Atualizar Usuário Inexistente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"HTTP 201 - Created ou HTTP 400 - Bad Request\", function () {",
+									"    const statusCode = pm.response.code;",
+									"    pm.expect([201, 400]).to.include(statusCode);",
+									"});",
+									"",
+									"pm.test(\"Cadastro realizado com sucesso\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property(\"_id\"); ",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwtToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome\": \"usuario\",\n    \"email\": \"{{$randomEmail}}\",\n    \"password\": \"senha123\",\n    \"administrador\": \"true\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/usuarios/{{invalidUser}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"usuarios",
+								"{{invalidUser}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "DELETE /usuarios/{id}",
+			"item": [
+				{
+					"name": "DELETE /usuarios - Deletar Usuário Existente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"HTTP 200 OK\", function () {",
+									"    pm.expect(pm.response.code).to.eql(200); ",
+									"});",
+									"",
+									"pm.test(\"Registro excluído com sucesso\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.eql(\"Registro excluído com sucesso\"); ",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/usuarios/{{userId3}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"usuarios",
+								"{{userId3}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE /usuarios - Deletar Usuário Inexistente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"HTTP 200 OK\", function () {",
+									"    pm.expect(pm.response.code).to.eql(200); ",
+									"});",
+									"pm.test(\"Nenhum registro excluído\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.eql(\"Nenhum registro excluído\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"deletar usuario\",\n  \"email\": \"deleteuser2123@teste.com\",\n  \"password\": \"teste\",\n  \"administrador\": \"true\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/usuarios/{{userId4}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"usuarios",
+								"{{userId4}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "REQUISIÇÕES POR MINUTO",
+			"item": [
+				{
+					"name": "100 Requisições por minuto",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"HTTP 200 - Requisição bem-sucedida dentro do limite de 100 requisições\", function () {",
+									"    pm.expect(pm.response.code).to.eql(200);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/usuarios/{{userId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"usuarios",
+								"{{userId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
