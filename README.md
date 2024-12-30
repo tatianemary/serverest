@@ -103,11 +103,18 @@ As variáveis de ambiente são usadas para facilitar a execução dos testes em 
 As variáveis principais são:
 
 baseUrl: A URL base da API: https://serverest.dev/#/
+
 jwtToken: O token de autenticação para acesso aos endpoints
+
 invalidToken: Token de autenticação inválido
+
 userId: O ID do usuário que pode ser criado ou manipulado durante os testes.
+
 invalidUser: ID de usuário inválido
+
 emailDuplicated: email duplicado
+
+
 
 Como Rodar os Testes no Postman
 
